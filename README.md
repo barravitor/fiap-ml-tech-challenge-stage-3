@@ -11,7 +11,7 @@
 
 ## Introduction
 
-project responsible for training machine learning algorithms for Embrapa's wine data [link](http://vitibrasil.cnpuv.embrapa.br/index.php)
+Project responsible for training machine learning algorithms for Embrapa's wine data [link](http://vitibrasil.cnpuv.embrapa.br/index.php)
 
 ## Technologies Used
 
