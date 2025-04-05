@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import predict
+from .routes import predict, load_select_values
 
 app = FastAPI()
 
@@ -14,3 +14,4 @@ app.add_middleware(
 )
 
 app.include_router(predict.router)
+app.include_router(load_select_values.router)

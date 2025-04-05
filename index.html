@@ -1,0 +1,83 @@
+<select id="categorySelect">
+  <option value="">Selecione uma categoria</option>
+</select>
+<select id="nameSelect" disabled>
+  <option value="">Selecione um nome</option>
+</select>
+<input id="year" type="number" placeholder="Ano">
+<button onclick="predict()">Prever</button>
+
+<p id="resultado"></p>
+
+<script>
+  const API_URL = 'fiap-ml-tech-challenge-stage-3-production.up.railway.app';
+
+  const categorySelect = document.getElementById('categorySelect');
+  const nameSelect = document.getElementById('nameSelect');
+
+  async function loadOptions() {
+    try {
+      const response = await fetch(`${API_URL}/options`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: 'productions' })
+      });
+      const data = await response.json();
+
+      namesByCategory = data.names_by_category;
+      const categories = data.categories;
+
+      // Preenche categorias
+      categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        categorySelect.appendChild(opt);
+      });
+
+      // Evento ao mudar categoria
+      categorySelect.addEventListener('change', () => {
+        const selectedCategory = categorySelect.value;
+        const names = namesByCategory[selectedCategory];
+
+        // Limpa o select de nomes
+        nameSelect.innerHTML = '<option value="">Selecione um nome</option>';
+
+        if (names && names.length > 0) {
+          // Preenche e habilita
+          names.forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            opt.textContent = name;
+            nameSelect.appendChild(opt);
+          });
+          nameSelect.disabled = false;
+        } else {
+          // Desabilita se não houver nomes
+          nameSelect.disabled = true;
+        }
+      });
+    } catch (err) {
+      console.error('Erro ao carregar opções da API:', err);
+    }
+  }
+
+  loadOptions();
+
+  async function predict() {
+    const type = "productions";
+    const name = nameSelect.value;
+    const category = categorySelect.value;
+    const year = parseInt(document.getElementById("year").value);
+
+    const response = await fetch(`${API_URL}/predict`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type, name, category, year })
+    });
+
+    const data = await response.json();
+    document.getElementById("resultado").innerText = 
+      `Previsão: ${data.prediction.toLocaleString()} litros`;
+  }
+</script>
