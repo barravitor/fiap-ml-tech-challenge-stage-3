@@ -45,13 +45,13 @@
 </style>
 
 <div class="form-container">
-  <select id="categorySelect">
+  <select id="categorySelect" required>
     <option value="">Selecione uma categoria</option>
   </select>
-  <select id="nameSelect" disabled>
+  <select id="nameSelect" disabled required>
     <option value="">Selecione um nome</option>
   </select>
-  <input id="year" type="number" min="1970" max="2100" placeholder="Ano">
+  <input id="year" type="number" min="1970" max="2100" placeholder="Ano" required>
   <button onclick="predict()">Prever</button>
 
   <p id="result"></p>
@@ -63,6 +63,8 @@
 
   const categorySelect = document.getElementById('categorySelect');
   const nameSelect = document.getElementById('nameSelect');
+  const yearInput = document.getElementById('year');
+  const result = document.getElementById('result');
 
   async function loadOptions() {
     try {
@@ -114,10 +116,17 @@
   loadOptions();
 
   async function predict() {
-    const type = "productions";
     const name = nameSelect.value;
     const category = categorySelect.value;
-    const year = parseInt(document.getElementById("year").value);
+    const year = parseInt(yearInput.value);
+
+    if (!name || !category || !year) {
+      result.innerText = `All fields must be filled in!`;
+      result.style.color = "red";
+      return;
+    }
+
+    const type = "productions";
 
     const response = await fetch(`${API_URL}/predict`, {
       method: "POST",
@@ -126,6 +135,7 @@
     });
 
     const data = await response.json();
-    document.getElementById("result").innerText = `Previsão: ${data.prediction.toLocaleString()} litros`;
+    result.innerText = `Previsão: ${data.prediction.toLocaleString()} litros`;
+    result.style.color = "black";
   }
 </script>
