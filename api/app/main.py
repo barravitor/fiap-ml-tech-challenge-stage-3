@@ -13,4 +13,4 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(predict.router)
+app.include_router(predict.router, methods=["POST"])

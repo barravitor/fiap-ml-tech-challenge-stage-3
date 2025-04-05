@@ -6,6 +6,7 @@ router = APIRouter()
 
 @router.post("/predict")
 async def predict(data: dict):
+    print("Método:", data.method)
     y_pred_litros = load_prediction(data["type"], data["category"], data["name"], data["year"])
 
     return {
