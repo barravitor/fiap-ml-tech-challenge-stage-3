@@ -63,7 +63,7 @@ def save_trained_model(model, type, filename):
     joblib.dump(model, f'./models/{type}/{filename}_model_trained.pkl')
 
 def save_trained_encoder(encoder, type, filename):
-    os.makedirs(f'./models/{type}', exist_ok=True)
+    os.makedirs(f'./encoders/{type}', exist_ok=True)
     joblib.dump(encoder, f'./encoders/{type}/{filename}_encoder_trained.pkl')
 
 def load_trained_model(type, filename):
@@ -71,5 +71,5 @@ def load_trained_model(type, filename):
     return joblib.load(f'./models/{type}/{filename}_model_trained.pkl')
 
 def load_trained_encoder(type, filename):
-    os.makedirs(f'./models/{type}', exist_ok=True)
+    os.makedirs(f'./encoders/{type}', exist_ok=True)
     return joblib.load(f'./encoders/{type}/{filename}_encoder_trained.pkl')
