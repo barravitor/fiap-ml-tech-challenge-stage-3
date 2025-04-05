@@ -68,11 +68,7 @@
 
   async function loadOptions() {
     try {
-      const response = await fetch(`${API_URL}/options/productions`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type: 'productions' })
-      });
+      const response = await fetch(`${API_URL}/options/productions`);
       const data = await response.json();
 
       namesByCategory = data.names_by_category;
