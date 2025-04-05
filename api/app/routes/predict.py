@@ -5,7 +5,7 @@ from utils.helpers import load_prediction
 router = APIRouter()
 
 @router.post("/predict")
-def predict(data: dict):
+async def predict(data: dict):
     y_pred_litros = load_prediction(data["type"], data["category"], data["name"], data["year"])
 
     return {

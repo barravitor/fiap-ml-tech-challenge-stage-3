@@ -44,6 +44,11 @@ Run the prediction script test model
 python -m prediction.predict_productions
 ```
 
+Run the API to load predict data
+```bash
+uvicorn api.app.main:app --host 0.0.0.0 --port 8000 --reload # Run in dev mode
+```
+
 ## Contribution
 
 We welcome contributions to this project! Here’s how you can help:
