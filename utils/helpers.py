@@ -12,6 +12,8 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_percentage_error
 
 def load_data(type):
+    os.makedirs('./data', exist_ok=True)
+
     if os.path.exists(f'./data/data_embrapa_{type}.csv'):
         return pd.read_csv(f'./data/data_embrapa_{type}.csv')
 
@@ -56,14 +58,18 @@ def error_logs(y_test, y_pred):
     print(f"RMSE: {rmse:,.2f}")
     print(f"MAPE: {mape:.2f}%")
 
-def save_trained_model(model, type, filename): 
+def save_trained_model(model, type, filename):
+    os.makedirs(f'./models/{type}', exist_ok=True)
     joblib.dump(model, f'./models/{type}/{filename}_model_trained.pkl')
 
-def save_trained_encoder(encoder, type, filename): 
+def save_trained_encoder(encoder, type, filename):
+    os.makedirs(f'./models/{type}', exist_ok=True)
     joblib.dump(encoder, f'./encoders/{type}/{filename}_encoder_trained.pkl')
 
 def load_trained_model(type, filename):
+    os.makedirs(f'./models/{type}', exist_ok=True)
     return joblib.load(f'./models/{type}/{filename}_model_trained.pkl')
 
 def load_trained_encoder(type, filename):
+    os.makedirs(f'./models/{type}', exist_ok=True)
     return joblib.load(f'./encoders/{type}/{filename}_encoder_trained.pkl')
