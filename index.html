@@ -5,6 +5,8 @@
     height: 100vh;
     font-family: sans-serif;
     display: flex;
+    flex-direction: column;
+    gap: 5px;
     align-items: center;
     justify-content: center;
     background: #f9f9f9;
@@ -42,6 +44,33 @@
   #result {
     text-align: center;
   }
+
+  #table {
+    border-collapse: collapse;
+    width: 50%;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    text-transform: uppercase;
+  }
+
+  th, td {
+    border: 1px solid #000;
+    padding: 8px 12px;
+    text-align: center;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  tr:nth-child(even) {
+    background-color: #fafafa;
+  }
+
+  tr:hover {
+    background-color: #e0f0ff;
+  }
 </style>
 
 <div class="form-container">
@@ -57,6 +86,17 @@
   <p id="result"></p>
 </div>
 
+<table id="table">
+  <thead>
+    <tr>
+      <th>Categoria</th>
+      <th>Nome</th>
+      <th>Qtd litros</th>
+      <th>Ano</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
 
 <script>
   const API_URL = 'https://fiap-ml-tech-challenge-stage-3-production.up.railway.app';
@@ -65,6 +105,8 @@
   const nameSelect = document.getElementById('nameSelect');
   const yearInput = document.getElementById('year');
   const result = document.getElementById('result');
+
+  const table = document.getElementById("table").querySelector("tbody");
 
   async function loadOptions() {
     try {
@@ -133,5 +175,29 @@
     const data = await response.json();
     result.innerText = `Previsão: ${data.prediction.toLocaleString()} litros`;
     result.style.color = "black";
+    table.innerHTML = '';
+
+    data.data.forEach(([nome, categoria, year, liters]) => {
+      const row = document.createElement("tr");
+
+      const cellCategoria = document.createElement("td");
+      cellCategoria.textContent = categoria;
+
+      const cellNome = document.createElement("td");
+      cellNome.textContent = nome;
+
+      const cellLiters = document.createElement("td");
+      cellLiters.textContent = liters;
+
+      const cellYear = document.createElement("td");
+      cellYear.textContent = year;
+
+      row.appendChild(cellCategoria);
+      row.appendChild(cellNome);
+      row.appendChild(cellLiters);
+      row.appendChild(cellYear);
+
+      table.appendChild(row);
+    });
   }
 </script>
