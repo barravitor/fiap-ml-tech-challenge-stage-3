@@ -13,6 +13,11 @@
 
 Project responsible for training machine learning algorithms for Embrapa's wine data [link](http://vitibrasil.cnpuv.embrapa.br/index.php)
 
+
+Page [link](https://barravitor.github.io/fiap-ml-tech-challenge-stage-3) to test previsions.
+
+![alt text](image.png)
+
 ## Technologies Used
 
 - **Python**: The project's main language, chosen for its rich library for data analysis.
