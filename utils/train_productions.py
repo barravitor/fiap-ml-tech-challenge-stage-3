@@ -55,6 +55,9 @@ def train_model(df, wine_name, wine_category):
 
     df_filtered = filter_data(df, wine_name, wine_category, 20)
 
+    if (len(df_filtered) < 5):
+        return
+
     X_train, X_test, y_train, y_test, encoder = split_test_and_train(df_filtered)
 
     # Linear regression

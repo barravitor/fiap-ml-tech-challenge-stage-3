@@ -10,6 +10,9 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY ./api/app /app/app
 
+COPY ../encoders /app/encoders
+COPY ../utils /app/models
+
 COPY ../utils /app/utils
 
 EXPOSE 8000

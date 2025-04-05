@@ -36,6 +36,27 @@ def load_data(type):
         print(f"Error on request: {response.status_code}")
         print(response.text)
 
+def load_productions_categories():
+    df = load_data('productions')
+
+    df = df[df['amount_liters'] != '-']
+
+    df['name'] = df['name'].str.strip()
+    df['category'] = df['category'].str.strip()
+
+    df = df[df['name'].str.lower() != 'total']
+
+    categories = sorted(df['category'].unique().tolist())
+
+    return {
+        "categories": categories,
+        "names_by_category": df[['name', 'category']]
+            .drop_duplicates()
+            .groupby('category')['name']
+            .apply(list)
+            .to_dict(),
+    }
+
 def slugify(text):
     """
     Turns text into a slug: lowercase, without spaces or dashes.

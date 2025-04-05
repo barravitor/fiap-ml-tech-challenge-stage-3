@@ -68,7 +68,7 @@
 
   async function loadOptions() {
     try {
-      const response = await fetch(`${API_URL}/options`, {
+      const response = await fetch(`${API_URL}/options/productions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: 'productions' })
